@@ -8,6 +8,7 @@ export default function Sidebar() {
     const menus = [
         { name: 'Home', path: '/dashboard' },
         { name: 'Lapor Pajak', path: '/dashboard/spt' },
+        { name: 'Daftar SPT', path: '/dashboard/daftarspt' },
         { name: 'Profile', path: '/dashboard/profile' }
     ];
 
