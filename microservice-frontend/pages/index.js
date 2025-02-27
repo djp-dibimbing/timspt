@@ -1,13 +1,22 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
 import Head from 'next/head'
 import Image from 'next/image'
+import Link from "next/link";
 
 export default function LoginPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState(null);
   const router = useRouter();
+
+  // Check if token exists and redirect to dashboard
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      router.push('/dashboard');
+    }
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -77,6 +86,15 @@ export default function LoginPage() {
             >
               Login
             </button>
+            <p className="text-center mt-4">
+              Don't have an account?
+              <Link
+                href="/register"
+                className="text-blue-600 ml-1 underline"
+              >
+                Register Here
+              </Link>
+            </p>
           </form>
         </div>
       </div>

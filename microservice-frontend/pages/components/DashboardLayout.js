@@ -13,12 +13,12 @@ export default function DashboardLayout({ children }) {
 
         if (!storedToken) {
             setTimeout(() => {
-                router.push('/index'); // Redirect to login
-            }, 100); // Delay redirection slightly
+                router.push('/'); 
+            }, 100); 
         }
-    }, [router]); // Dependency on `router`
+    }, [router]); 
 
-    // Prevent rendering dashboard before checking token
+    
     if (!token) return null;
 
     return (
