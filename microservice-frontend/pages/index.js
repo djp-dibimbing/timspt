@@ -10,14 +10,6 @@ export default function LoginPage() {
   const [error, setError] = useState(null);
   const router = useRouter();
 
-  useEffect(() => {
-    const storedToken = localStorage.getItem('token');
-  
-    if (storedToken) {
-      router.replace('/dashboard'); // Use replace instead of push
-    }
-  }, [router]);
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError(null);
@@ -44,8 +36,7 @@ export default function LoginPage() {
       setError(err.message);
     }
   };
-
-
+  
   return (
     <>
       <Head>
