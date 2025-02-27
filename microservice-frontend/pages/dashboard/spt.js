@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import DashboardLayout from '../components/dashboardLayout';
-import axios from 'axios'; 
 
 export default function Spt() {
   const [formData, setFormData] = useState({
@@ -29,24 +28,64 @@ export default function Spt() {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
+  const preparedData = {
+    ...formData,
+    npwp: formData.npwp,
+    nama: formData.nama,
+    tahunPajak: Number(formData.tahunPajak),
+    penghasilanBruto: Number(formData.penghasilanBruto),
+    penghasilanNeto: Number(formData.penghasilanNeto),
+    ptkp: Number(formData.ptkp),
+    pkp: Number(formData.pkp),
+    pphTerutang: Number(formData.pphTerutang),
+    pphDibayar: Number(formData.pphDibayar),
+    kurangBayar: Number(formData.kurangBayar),
+    lebihBayar: Number(formData.lebihBayar),
+    pphFinal: Number(formData.pphFinal),
+    penghasilanBebas: Number(formData.penghasilanBebas),
+    jumlahHarta: Number(formData.jumlahHarta),
+    jumlahKewajiban: Number(formData.jumlahKewajiban),
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setMessage(null);
-
+    setMessage({ type: '', text: '' });
+    console.log("Data yang dikirim:", formData);
     try {
         const response = await fetch('http://localhost:3002/spt', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify(formData),
+            body: JSON.stringify(preparedData),
         });
 
         if (!response.ok) {
-            throw new Error('Gagal menyimpan data');
+          const responseText = await response.text(); 
+console.error("Server response:", responseText);
+setMessage({ type: 'error', text: `Gagal menyimpan: ${responseText}` });
+            throw new Error('Gagal menyimpan data' + response.statusText);
         }
 
         setMessage({ type: 'success', text: 'SPT berhasil disimpan!' });
+        setFormData({
+          npwp: '',
+          nama: '',
+          tahunPajak: '',
+          penghasilanBruto: '',
+          penghasilanNeto: '',
+          ptkp: '',
+          pkp: '',
+          pphTerutang: '',
+          pphDibayar: '',
+          kurangBayar: '',
+          lebihBayar: '',
+          pphFinal: '',
+          penghasilanBebas: '',
+          jumlahHarta: '',
+          jumlahKewajiban: '',
+          tanggalLapor: ''
+      });
     } catch (error) {
         setMessage({ type: 'error', text: error.message });
     }

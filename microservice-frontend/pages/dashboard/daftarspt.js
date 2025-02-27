@@ -7,19 +7,37 @@ export default function SptTable() {
   const [isLoading, setIsLoading] = useState(true);
   const [message, setMessage] = useState({ type: '', text: '' });
 
+  const fetchData = async () => {
+    setIsLoading(true);
+    try {
+      const response = await axios.get('http://localhost:3002/spt');
+      setSptData(response.data);
+    } catch (error) {
+      setMessage({ type: 'error', text: 'Gagal mengambil data SPT' });
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get('http://localhost:3002/spt');
-        setSptData(response.data);
-      } catch (error) {
-        setMessage({ type: 'error', text: 'Gagal mengambil data SPT' });
-      } finally {
-        setIsLoading(false);
-      }
-    };
     fetchData();
   }, []);
+
+  
+  const handleDelete = async (id) => {
+    if (!window.confirm('Apakah Anda yakin ingin menghapus data ini?')) return;
+
+    try {
+      await axios.delete(`http://localhost:3002/spt/${id}`);
+      setMessage({ type: 'success', text: 'Data berhasil dihapus!' });
+
+     
+      fetchData();
+    } catch (error) {
+      setMessage({ type: 'error', text: 'Gagal menghapus data SPT' });
+    }
+  };
 
   return (
     <DashboardLayout>
@@ -47,11 +65,12 @@ export default function SptTable() {
                 <th className="border border-gray-300 p-2">PPH Terutang</th>
                 <th className="border border-gray-300 p-2">PPH Dibayar</th>
                 <th className="border border-gray-300 p-2">Tanggal Lapor</th>
+                <th className="border border-gray-300 p-2">Aksi</th>
               </tr>
             </thead>
             <tbody>
               {sptData.map((spt, index) => (
-                <tr key={spt.id} className="border border-gray-300 text-center">
+                <tr key={spt._id} className="border border-gray-300 text-center">
                   <td className="border border-gray-300 p-2">{index + 1}</td>
                   <td className="border border-gray-300 p-2">{spt.npwp}</td>
                   <td className="border border-gray-300 p-2">{spt.nama}</td>
@@ -61,6 +80,14 @@ export default function SptTable() {
                   <td className="border border-gray-300 p-2">{spt.pphTerutang}</td>
                   <td className="border border-gray-300 p-2">{spt.pphDibayar}</td>
                   <td className="border border-gray-300 p-2">{new Date(spt.tanggalLapor).toLocaleDateString()}</td>
+                  <td className="border border-gray-300 p-2">
+                    <button 
+                      className="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-700"
+                      onClick={() => handleDelete(spt._id)}
+                    >
+                      Hapus
+                    </button>
+                  </td>
                 </tr>
               ))}
             </tbody>
