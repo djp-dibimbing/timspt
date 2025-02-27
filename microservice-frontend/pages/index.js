@@ -28,6 +28,7 @@ export default function LoginPage() {
       const data = await res.json();
       console.log('Login Success:', data);
 
+      localStorage.setItem('token', data.access_token); // Store JWT
       // Redirect after successful login
       router.push('/dashboard');
     } catch (err) {
@@ -48,6 +49,7 @@ export default function LoginPage() {
             <Image src="/Logo_djp.png" alt="DJP Logo" width={50} height={50} className="mr-3" />
             <h2 className="text-2xl font-semibold text-center text-yellow-400">Login</h2>
           </div>
+          {error && <p className="text-red-500">{error}</p>}
           <form onSubmit={handleSubmit}>
             <div className="mb-4">
               <label className="block text-gray-700">Email</label>
