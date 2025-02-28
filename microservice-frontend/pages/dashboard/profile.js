@@ -110,7 +110,7 @@ export default function EditProfile() {
                 <div>
                     <label className="block text-gray-700">Email</label>
                     <input type="email" name="email" value={formData.email} onChange={handleChange}
-                        className="w-full p-2 border rounded-lg" required />
+                        className="w-full p-2 border rounded-lg" readOnly disabled />
                 </div>
 
                 <div>

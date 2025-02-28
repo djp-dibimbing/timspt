@@ -24,12 +24,12 @@ export class WpController {
     @Get('profile')
     @UseGuards(AuthGuard('jwt'))
     async getProfile(@Req() req) {
-        const user = await this.wpService.findByEmail(req.user.email);
-        if (!user) {
+        const wp = await this.wpService.findByEmail(req.user.email);
+        if (!wp) {
             throw new NotFoundException('WP not found');
         }
         return {
-            message: 'Authorized User', data: user
+            message: 'Authorized User', data: wp
         };
     }
 

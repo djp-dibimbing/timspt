@@ -31,7 +31,7 @@ export class AuthService {
     };
   }
 
-  async logout(wp: any) {
+  async logout(user: any) {
     return {
       message: 'Logout success',
     };
