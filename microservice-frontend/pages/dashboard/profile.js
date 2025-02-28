@@ -86,17 +86,17 @@ export default function EditProfile() {
     return (
         <DashboardLayout>
             <h1 className="text-2xl font-bold">Profile Information</h1>
-            {message && (
-                <div className={`p-3 mb-4 rounded ${message.type === 'success' ? 'bg-green-500' : 'bg-red-500'} text-white`}>
-                    {message.text}
-                </div>
-            )}
             <div className="max-w-7xl mx-auto bg-white rounded-lg shadow-md border border-gray-300 mt-6 p-6">
                 {/* Portlet 1 - Identitas */}
                 <div className="bg-indigo-900 text-white p-4 rounded-t-lg mb-6">
                     <h2 className="text-xl font-bold">Edit Profile</h2>
                 </div>
 
+                {message && (
+                    <div className={`p-3 mb-4 rounded ${message.type === 'success' ? 'bg-green-500' : 'bg-red-500'} text-white`}>
+                        {message.text}
+                    </div>
+                )}
                 <form onSubmit={handleSubmit} className="space-y-4">
                     <div className="grid grid-cols-2 gap-4">
                         <div>
@@ -132,13 +132,13 @@ export default function EditProfile() {
                     <div>
                         <label className="block text-gray-700 font-semibold">NIK</label>
                         <input type="text" name="nik" value={formData.nik} onChange={handleChange}
-                            className="w-full p-2 border rounded-lg focus:ring-2 focus:ring-blue-400" required  maxLength={16}/>
+                            className="w-full p-2 border rounded-lg focus:ring-2 focus:ring-blue-400" required maxLength={16} />
                     </div>
 
                     <div>
                         <label className="block text-gray-700 font-semibold">NPWP</label>
                         <input type="text" name="npwp" value={formData.npwp} onChange={handleChange}
-                            className="w-full p-2 border rounded-lg focus:ring-2 focus:ring-blue-400" required  maxLength={15}/>
+                            className="w-full p-2 border rounded-lg focus:ring-2 focus:ring-blue-400" required maxLength={15} />
                     </div>
 
                     <button type="submit"
